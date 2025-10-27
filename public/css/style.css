@@ -1,0 +1,370 @@
+@charset "UTF-8";
+
+body {
+	background-color: black;
+	font-family: "Hina Mincho", serif;
+	font-weight: 400;
+	font-style: normal;
+	font-size: 1rem;
+}
+
+header,
+footer {
+	max-width: 1200px;
+	margin: auto;
+	color: lightgoldenrodyellow;
+	background-color: black;
+}
+
+.nav_font {
+	font-family: "M PLUS 2", serif;
+	font-weight: 400;
+	font-size: 1.6rem;
+	color: lightgoldenrodyellow;
+	margin-top: 16px;
+	margin-bottom: 32px;
+}
+
+header {
+	top: 0;
+	padding: 0 12px 0 12px;
+	height: 70px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.header_left_block {
+	display: flex;
+	align-items: center;
+}
+
+.sisiwaka_touen_icon {
+	width: 40px;
+	height: auto;
+	border-radius: 50%;
+}
+
+header h1 {
+	font-size: 2rem;
+	font-family: "Zen Antique", serif;
+	margin-left: 16px;
+}
+
+.header_right_block {
+	display: flex;
+	gap: 12px;
+	align-items: center;
+}
+
+.minne_icon img {
+	width: auto;
+	height: 30px;
+	background-color: white;
+}
+
+.instagram_icon img {
+	width: 30px;
+	height: 30px;
+}
+
+main {
+	max-width: 1200px;
+	margin: 0 auto;
+	background-color: #111111;
+	color: gainsboro;
+	line-height: 1.6;
+	padding: 32px;
+}
+
+.main_container {
+	max-width: 960px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.link_style {
+	/* color: lightgoldenrodyellow; */
+	font-family: "M PLUS 2", sans-serif;
+	text-decoration: underline;
+	color: lightgoldenrodyellow;
+	font-size: 1rem;
+}
+
+footer {
+	bottom: 0;
+	height: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-family: "Zen Antique", serif;
+}
+
+.section_contents {
+	padding-left: 80px;
+	padding-right: 80px;
+}
+
+/* セクション間の間隔調整 */
+.works_section,
+.news_section,
+.about_section {
+	margin-bottom: 80px;
+}
+
+/* =====================================
+	フラッシュメッセージ
+===================================== */
+.flash_message {
+	text-align: center;
+	font-size: 1rem;
+	color: red;
+}
+
+/* ===============================
+    Introセクション
+=============================== */
+.intro_area {
+	display: flex;
+	gap: 40px;
+}
+
+.sisiwaka_family_area {
+	flex: 1;
+	min-width: 200px;
+	overflow: hidden;
+}
+
+.sisiwaka_family_area img {
+	width: 100%;
+	height: auto;
+}
+
+.sisiwaka_family_area figcaption {
+	font-size: 1.0rem;
+	text-align: center;
+}
+
+.intro_text {
+	flex: 2;
+}
+
+/* ===============================
+    更新情報セクション
+=============================== */
+.update_item {
+	margin-bottom: 20px;
+}
+
+.update_date {
+	font-family: "M PLUS 2", sans-serif;
+	font-size: 1rem;
+	color: lightgoldenrodyellow;
+	line-height: 1.6;
+}
+
+.update_article {
+	font-family: "Hina Mincho", serif;
+	font-size: 1rem;
+	line-height: 1.6;
+	color: gainsboro;
+	white-space: nowrap;
+	overflow: hidden;
+	position: relative;
+	cursor: pointer;
+}
+
+/* 畳み込み時 */
+.update_article.is_collapsed {
+	white-space: nowrap;
+	/* 折り返さない */
+}
+
+/* 展開時は改行と折り返しを有効化して全文表示 */
+.update_article.is_expanded {
+	white-space: pre-wrap;
+	/* 改行と連続空白を保持しつつ折り返し */
+}
+
+/* ======================================
+    Worksへのリンクセクション
+====================================== */
+.art_link {
+	display: block;
+	padding: 10px 20px;
+	font-family: "Dela Gothic One", sans-serif;
+	font-size: 5rem;
+	font-weight: 400;
+	max-width: 640px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	color: black;
+	text-decoration: none;
+	background-image: url("../images/to_works.jpg");
+	background-size: cover;
+	background-position: center;
+	border-radius: 12px;
+	position: relative;
+	overflow: hidden;
+	line-height: 1.2;
+}
+
+/* ======================================
+    Contactセクション
+====================================== */
+.contact_box {
+	display: block;
+	width: fit-content;
+	margin: 128px auto 64px auto;
+	font-size: 1.2rem;
+}
+
+.contact_box img {
+	width: 32px;
+	height: 32px;
+}
+
+.contact_box a {
+	color: lightgoldenrodyellow;
+	text-decoration: underline;
+	word-break: break-word;
+}
+
+/* =============================
+	スマホ向け
+============================= */
+@media screen and (max-width: 768px) {
+
+	body {
+		font-size: 0.9rem;
+	}
+
+	header,
+	footer {
+		max-width: 100%;
+		margin: 0;
+		padding-left: 8px;
+		padding-right: 8px;
+	}
+
+	.nav_font {
+		font-size: 1.1rem;
+		margin-top: 16px;
+		margin-bottom: 16px;
+	}
+
+	header {
+		height: 70px;
+	}
+
+	.sisiwaka_touen_icon {
+		width: 24px;
+	}
+
+	header h1 {
+		font-size: 1.5rem;
+		margin-left: 4px;
+	}
+
+	.header_right_block {
+		gap: 12px;
+		/* ★★★ */
+	}
+
+	.minne_icon img {
+		height: 24px;
+	}
+
+	.instagram_icon img {
+		width: 24px;
+		height: 24px;
+	}
+
+	main {
+		max-width: 100%;
+		margin: 0;
+		padding: 16px 8px;
+	}
+
+	.main_container {
+		max-width: 100%;
+		margin: 0;
+	}
+
+	.link_style {
+		font-size: 0.75rem;
+	}
+
+	footer {
+		height: 40px;
+		/* ★★★ */
+	}
+
+	.section_contents {
+		padding-left: 8px;
+		padding-right: 8px;
+	}
+
+	/* セクション間の間隔調整 */
+	.works_section,
+	.news_section,
+	.about_section {
+		margin-bottom: 40px;
+	}
+
+	/* ===============================
+    	更新情報セクション
+	=============================== */
+	.update_item {
+		margin-bottom: 12px;
+	}
+
+	.update_date {
+		font-size: 0.9rem;
+	}
+
+	.update_article {
+		font-size: 0.9rem;
+	}
+
+	/* ===============================
+    	Introセクション
+	=============================== */
+	.intro_area {
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.sisiwaka_family_area {
+		max-width: 100%;
+	}
+
+	.sisiwaka_family_area figcaption {
+		font-size: 0.9rem;
+	}
+
+	/* ======================================
+  	 	Worksへのリンクセクション
+	====================================== */
+	.art_link {
+		padding: 10px 20px;
+		font-size: 2.5rem;
+		width: 100%;
+		border-radius: 6px;
+		/* line-height: 1.2; */
+	}
+
+	/* ======================================
+		Contactセクション
+	====================================== */
+	.contact_box {
+		margin: 64px auto 32px auto;
+		font-size: 1rem;
+	}
+
+	.contact_box img {
+		width: 20px;
+		height: 20px;
+	}
+}

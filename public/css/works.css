@@ -1,0 +1,278 @@
+@charset "UTF-8";
+
+
+/* =======================================
+    isotope.js
+======================================= */
+.grid {
+	margin: 0 auto;
+}
+
+.grid-item {
+	width: 220px;
+	padding: 12px;
+	box-sizing: border-box;
+}
+
+.card {
+	background: #fff;
+	overflow: hidden;
+	background-color: transparent;
+}
+
+.thumb img {
+	display: block;
+	border-radius: 8px;
+	width: 100%;
+	height: 300px;
+	object-fit: cover;
+	display: block;
+}
+
+.caption {
+	padding: 8px 10px;
+	font-size: 1rem;
+	text-align: center;
+}
+
+#artworks_gallery.is_loading {
+	opacity: 0;
+}
+
+#artworks_gallery {
+	transition: opacity .8s;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* =======================================
+    isotope.js以外
+======================================= */
+.back_to_index {
+	text-align: right;
+	display: block;
+}
+
+/* 
+    検索パネル
+*/
+/* タイトル「作品一覧」と検索パネル開閉ボタン */
+.title_and_button {
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
+	align-items: center;
+}
+
+/* 検索パネルの開閉ボタン */
+#search_toggle_btn {
+	appearance: none;
+	/* ブラウザのボタンに対するデフォルト装飾を消す */
+	border: 1px solid #888888;
+	background-color: #333333;
+	padding: 0 1rem;
+	border-radius: 1rem;
+	cursor: pointer;
+}
+
+#search_toggle_btn:hover {
+	color: lightgoldenrodyellow;
+}
+
+/* 検索パネル */
+#search_panel {
+	overflow: hidden;
+	max-height: 0;
+	transition: max-height .5s linear;
+	background-color: rgba(80, 80, 80, 0.1);
+	padding: 0;
+	border-radius: 8px;
+	margin-top: 8px;
+	box-sizing: border-box;
+}
+
+#search_panel.search_panel_open {
+	/* 中身が増えても収まる程度に大きな値にしておく */
+	max-height: 600px;
+}
+
+#search_form {
+	margin: 1rem;
+}
+
+#search_panel input[type="search"] {
+	margin-left: 1rem;
+	border: 1px solid #aaaaaa;
+	width: calc(100% - 1rem);
+	box-sizing: border-box;
+	padding: 0.5rem;
+}
+
+.field_group {
+	margin-bottom: 1rem;
+}
+
+.field_group>legend {
+	font-family: "Zen Antique", serif;
+	font-weight: 600;
+	font-size: 1.1rem;
+	display: flex;
+	align-items: center;
+}
+
+.checkbox_container {
+	display: flex;
+	flex-wrap: wrap;
+	gap: .5rem 1rem;
+	/* 行間/列間 */
+	align-items: center;
+	padding-left: 1rem;
+}
+
+.checkbox_container label {
+	cursor: pointer;
+}
+
+.btn_in_search_panel {
+	padding: 0 0.5rem;
+	margin-left: 0.7rem;
+	background-color: #333333;
+	border: 1px solid #888888;
+	border-radius: 0.5rem;
+	font-family: "Zen Antique", serif;
+	font-weight: 400;
+	line-height: 1.1;
+	font-size: 1rem;
+}
+
+.btn_in_search_panel:hover {
+	color: lightgoldenrodyellow;
+}
+
+.search_panel_all_btn {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.search_panel_all_btn>button {
+	padding: 0.5rem 1rem;
+	border-radius: 1rem;
+}
+
+/* =======================================
+	ローディングスピナー
+======================================= */
+#loading_spinner {
+	color: #ffffff;
+	display: block;
+	font-size: 45px;
+	text-indent: -9999em;
+	overflow: hidden;
+	width: 1em;
+	height: 1em;
+	border-radius: 50%;
+	position: relative;
+	transform: translateZ(0);
+	animation: mltShdSpin 1.7s infinite ease, round 1.7s infinite ease;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@keyframes mltShdSpin {
+	0% {
+		box-shadow: 0 -0.83em 0 -0.4em,
+			0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em,
+			0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+	}
+
+	5%,
+	95% {
+		box-shadow: 0 -0.83em 0 -0.4em,
+			0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em,
+			0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+	}
+
+	10%,
+	59% {
+		box-shadow: 0 -0.83em 0 -0.4em,
+			-0.087em -0.825em 0 -0.42em, -0.173em -0.812em 0 -0.44em,
+			-0.256em -0.789em 0 -0.46em, -0.297em -0.775em 0 -0.477em;
+	}
+
+	20% {
+		box-shadow: 0 -0.83em 0 -0.4em, -0.338em -0.758em 0 -0.42em,
+			-0.555em -0.617em 0 -0.44em, -0.671em -0.488em 0 -0.46em,
+			-0.749em -0.34em 0 -0.477em;
+	}
+
+	38% {
+		box-shadow: 0 -0.83em 0 -0.4em, -0.377em -0.74em 0 -0.42em,
+			-0.645em -0.522em 0 -0.44em, -0.775em -0.297em 0 -0.46em,
+			-0.82em -0.09em 0 -0.477em;
+	}
+
+	100% {
+		box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em,
+			0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+	}
+}
+
+@keyframes round {
+	0% {
+		transform: rotate(0deg)
+	}
+
+	100% {
+		transform: rotate(360deg)
+	}
+}
+
+
+
+/* =======================================
+	スマホ
+======================================= */
+@media (max-width: 768px) {
+
+	/* =======================================
+    	isotope.js
+	======================================= */
+	.grid-item {
+		width: 170px;
+		padding: 4px;
+	}
+
+	.thumb img {
+		border-radius: 4px;
+		height: 200px;
+	}
+
+	.caption {
+		padding: 4px 0;
+		font-size: 0.8rem;
+	}
+
+	/* =======================================
+    	検索パネル
+	======================================= */
+	/* 検索パネルの開閉ボタン */
+	#search_toggle_btn {
+		padding: 0 0.5rem;
+		border-radius: 0.5rem;
+	}
+
+	#search_form {
+		margin: 0;
+	}
+
+	.btn_in_search_panel {
+		padding: 0 0.5rem;
+		margin-left: 0.7rem;
+		border-radius: 0.5rem;
+		font-size: 0.8rem;
+	}
+
+	.field_group legend {
+		font-size: 0.9rem;
+	}
+}

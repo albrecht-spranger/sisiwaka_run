@@ -1,0 +1,397 @@
+@charset "UTF-8";
+
+.back_to_works {
+	text-align: right;
+	display: block;
+}
+
+.works_name_container {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 64px;
+	margin-bottom: 0;
+	width: fit-content;
+}
+
+#works_name {
+	display: block;
+	font-size: 2rem;
+	font-weight: 600;
+	font-family: "Kaisei Tokumin", serif;
+	border-bottom: 1px solid lightgoldenrodyellow;
+}
+
+/* ------------------------------
+  ギャラリー(Swiper)
+ ------------------------------ */
+.swiper {
+	width: 100%;
+}
+
+.swiper-slide img {
+	display: block;
+	width: 250px;
+	height: 300px;
+	object-fit: cover;
+	transition: .7s;
+	/* アスペクト比を保ったまま切り抜き */
+	object-position: center;
+	margin: 0 auto;
+	cursor: pointer;
+}
+
+/* 非アクティブ（左右）の画像 */
+.swiper-slide:not(.swiper-slide-active) img {
+	opacity: 0.3;
+	transform: scale(0.8);
+	/* 0.8倍に縮小 */
+}
+
+/* アクティブ（中央）の画像 */
+.swiper-slide-active img {
+	opacity: 1;
+	transform: scale(1);
+	/* 元の大きさ */
+	z-index: 1;
+}
+
+/* 前への矢印 */
+.gallerySwiperContainer .swiper-button-prev {
+	left: -20px;
+	width: 80px;
+	height: auto;
+}
+
+/* 次への矢印 */
+.gallerySwiperContainer .swiper-button-next {
+	right: -20px;
+	width: 80px;
+	height: auto;
+}
+
+.gallerySwiperContainer .swiper-button-next::after,
+.gallerySwiperContainer .swiper-button-prev::after {
+	background-repeat: no-repeat;
+	background-size: contain;
+	content: "";
+	width: 80px;
+	margin: auto;
+	height: 80px;
+}
+
+.gallerySwiperContainer .swiper-button-prev::after {
+	background-image: url(../images/sliderLeftArrow.png);
+}
+
+.gallerySwiperContainer .swiper-button-next::after {
+	background-image: url(../images/sliderRightArrow.png);
+}
+
+/* Swiper標準の左右矢印が出てしまうので強制的に非表示 */
+.swiper-navigation-icon {
+	display: none;
+}
+
+/* ページネーション */
+.gallerySwiperContainer .swiper-horizontal>.swiper-pagination-bullets,
+.gallerySwiperContainer .swiper-pagination-bullets.swiper-pagination-horizontal,
+.gallerySwiperContainer .swiper-pagination-custom,
+.gallerySwiperContainer .swiper-pagination-fraction {
+	bottom: -56px;
+}
+
+/* 非アクティブ時：淡い陰陽マーク */
+.gallerySwiperContainer .swiper-pagination-bullet {
+	background-color: transparent;
+	background-image: url('../images/pagenation.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+	border-radius: unset;
+	opacity: 0.3;
+	/* アイコンのサイズ */
+	width: 32px;
+	height: 32px;
+	margin: 0 4px !important;
+	/* ドット間隔 */
+}
+
+/* アクティブ時：くっきり陰陽マーク */
+.gallerySwiperContainer .swiper-pagination-bullet-active {
+	background-image: url('../images/pagenation.png');
+	opacity: 1;
+}
+
+.gallerySwiperContainer {
+	margin-top: 64px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 120px;
+	max-width: 800px;
+	position: relative;
+}
+
+/* lightbox：スライダー画像をクリックしたら、画面上に最大表示 */
+#lightbox {
+	position: fixed;
+	inset: 0;
+	/* ⇒top／right／bottom／leftすべて0。画面全体を覆う定番の書き方 */
+	background: rgba(0, 0, 0, 0.75);
+	display: none;
+	/* 中央寄せ */
+	align-items: center;
+	justify-content: center;
+	z-index: 9999;
+	cursor: zoom-out;
+	/* クリックで閉じる感を出す */
+}
+
+/* 画像・動画 共通スタイル */
+.lightbox-media {
+	max-width: 100vw;
+	max-height: 100vh;
+	object-fit: contain;
+	user-select: none;
+	transform: scale(0.4);
+	opacity: 0;
+	transition: transform 0.5s ease, opacity 0.5s ease;
+	margin: auto;
+}
+
+/* 表示アニメ */
+.lightbox-media.show {
+	transform: scale(1);
+	opacity: 1;
+}
+
+/* 閉じるアニメ中 */
+.lightbox-media.closing {
+	transform: scale(0.4);
+	opacity: 0;
+	pointer-events: none;
+}
+
+/* 動画上はカーソルを通常に（コントロール操作しやすく）*/
+#lightboxVideo {
+	cursor: default;
+}
+
+/* 内側のラッパー：クリックで閉じる判定をしやすく */
+#lightboxInner {
+	width: 100%;
+	height: 100%;
+	display: grid;
+	place-items: center;
+}
+
+/* =========================================
+	作品詳細
+========================================= */
+.works_spec_container {
+	max-width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+	display: grid;
+	grid-template-columns: auto 1fr;
+	align-items: baseline;
+	row-gap: 1rem;
+	column-gap: 2rem;
+}
+
+.works_spec_container dt {
+	font-family: "M PLUS 2", sans-serif;
+	font-size: 1.2rem;
+	color: lightgoldenrodyellow;
+	text-align: right;
+	font-weight: 600;
+}
+
+.works_spec_container dd {
+	font-size: 1.2rem;
+	margin: 0;
+	white-space: normal;
+	line-height: 1.8;
+	text-align: justify;
+}
+
+.works_spec_container dd.pre_line {
+	white-space: pre-line;
+}
+
+#spec_online_shop img,
+#spec_instagram_url img {
+	vertical-align: text-bottom;
+}
+
+.works_spec_container dd.spec_update_date_style {
+	text-align: right;
+	font-size: 0.9rem;
+}
+
+#spec_update_date {
+	margin-left: 0.5rem;
+}
+
+/* 編集画面へのリンク */
+#edit_link {
+	display: inline;
+}
+
+.non_edit {
+	display: none;
+}
+
+
+/* ===============================
+	編集画面向け
+ =============================== */
+
+/* ------------------------------
+	ギャラリー(編集)
+ ------------------------------ */
+#media_gallery {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	gap: 12px;
+	margin-top: 64px;
+	margin-bottom: 64px;
+}
+
+.media_gallery_card {
+	border: 1px solid gainsboro;
+	border-radius: 8px;
+	padding: 8px;
+	text-align: center;
+}
+
+.media_gallery_card img {
+	width: 100%;
+	aspect-ratio: 1 / 1;
+	/* 正方形を維持 */
+	object-fit: cover;
+	border-radius: 6px;
+}
+
+/* ------------------------------
+	編集要素
+ ------------------------------ */
+/* テキスト入力系をフル幅に */
+.works_spec_container dd input[type="text"],
+.works_spec_container dd input[type="number"],
+.works_spec_container dd input[type="url"],
+.works_spec_container dd input[type="date"],
+.works_spec_container dd select,
+.works_spec_container dd textarea {
+	display: block;
+	/* 行要素として扱う（余白の謎を減らす） */
+	width: 100%;
+	/* 親(dd)の幅いっぱいに */
+	max-width: 100%;
+	/* どこかでmax-widthが指定されていても上書き */
+	box-sizing: border-box;
+	/* padding/border込みで100%に収める */
+	border: 1px solid gainsboro;
+}
+
+.works_spec_container dd input[type="url"]:disabled {
+	border: 1px dashed gainsboro;
+	color: dimgray;
+}
+
+#spec_category label,
+#spec_techniques label,
+#spec_coloring label {
+	margin-right: 1rem;
+	white-space: nowrap;
+}
+
+/* ------------------------------
+  キャンセルとsubmitボタン
+ ------------------------------ */
+.forms_buttons {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	margin-top: 2rem;
+	margin-bottom: 4rem;
+}
+
+#submit_btn,
+#cancel_btn {
+	display: block;
+	width: 20%;
+	border: 1px solid gainsboro;
+	background-color: #111111;
+	font-family: "M PLUS 2", sans-serif;
+	color: lightgoldenrodyellow;
+	font-size: 1.2rem;
+	text-align: center;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	font-weight: 500;
+}
+
+#submit_btn span,
+#cancel_btn span {
+	display: inline-block;
+	transition: transform 0.3s ease;
+	transform-origin: center center;
+}
+
+#submit_btn:hover span,
+#cancel_btn:hover span {
+	transform: scale(1.1);
+}
+
+
+/* =============================
+	スマホ向け
+============================= */
+@media screen and (max-width: 768px) {
+
+	/* =========================================
+		作品詳細
+	========================================= */
+	.works_name_container {
+		margin-left: 0;
+		margin-right: 0;
+		margin-top: 32px;
+		margin-bottom: 0;
+		padding-left: 12px;
+		padding-right: 12px;
+	}
+
+	#works_name {
+		font-size: 1.2rem;
+	}
+
+	.works_spec_container {
+		max-width: 100%;
+		padding-left: 12px;
+		padding-right: 12px;
+		margin-left: 0;
+		margin-right: 0;
+		grid-template-columns: 1fr;
+		row-gap: 4px;
+	}
+
+	.works_spec_container dt {
+		font-size: 1rem;
+		text-align: left;
+		margin-top: 1rem;
+	}
+
+	.works_spec_container dd {
+		font-size: 1rem;
+	}
+
+	/* =============================
+	編集画面はスマホでは使わない。遷移もしない
+	============================= */
+	#edit_link {
+		display: none;
+	}
+
+	.non_edit {
+		display: inline;
+	}
+}

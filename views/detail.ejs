@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<title>シシワカ陶苑｜<%= artwork.description_title %>
+	</title>
+	<link rel="stylesheet" href="/css/reset.css">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/detail.css">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Hina+Mincho&family=Kaisei+Tokumin&family=M+PLUS+2:wght@100..900&family=Zen+Antique&display=swap"
+		rel="stylesheet">
+
+	<!-- Swiper -->
+	<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+</head>
+
+<body>
+	<header>
+		<a href="/" class="header_left_block">
+			<img class="sisiwaka_touen_icon" src="/images/sisiwaka_touen_logo.jpg" alt="シシワカ陶苑ロゴ">
+			<h1>シシワカ陶苑</h1>
+		</a>
+		<div class="header_right_block">
+			<div class="minne_icon">
+				<a href="https://minne.com/@sisiwaka10en" target="_blank">
+					<img src="/images/minne_logo_vertical.png" alt="minne logo">
+				</a>
+			</div>
+			<div class="instagram_icon">
+				<a href="https://www.instagram.com/albrecht1999/" target="_blank">
+					<img class="instagram_icon" src="/images/Instagram_Glyph_Gradient.png" alt="Instagram Icon">
+				</a>
+			</div>
+		</div>
+	</header>
+
+	<main>
+		<!-- 一覧に戻る -->
+		<p class="back_to_works"><a href="/works" class="link_style">一覧に戻る</a></p>
+
+		<!-- タイトル -->
+		<div class="works_name_container">
+			<h1 id="works_name">
+				<%= artwork.description_title %>
+			</h1>
+		</div>
+
+		<!-- ギャラリー（Swiper） -->
+		<div class="gallerySwiperContainer">
+			<div class="swiper">
+				<div class="swiper-wrapper" id="swiper_slide_holder">
+					<% for (const m of media_rows) { %>
+						<div class="swiper-slide">
+							<img loading="lazy" src="<%= m.image_url %>" alt="<%= m.alt_ja || artwork.name %>" <% if
+								(m.video_url) { %> data-type="video" data-video_src="<%= m.video_url %>" <% } %> />
+						</div>
+						<% } %>
+				</div>
+			</div>
+			<div class="swiper-pagination"></div>
+			<div class="swiper-button-prev"></div>
+			<div class="swiper-button-next"></div>
+		</div>
+
+		<!-- 作品説明 -->
+		<dl class="works_spec_container">
+			<dt>銘</dt>
+			<dd id="spec_name">
+				<%= artwork.name || "(銘)" %>
+			</dd>
+
+			<dt>用途</dt>
+			<dd id="spec_category">
+				<%= artwork.category || "(用途)" %>
+			</dd>
+
+			<dt>説明</dt>
+			<dd id="spec_description" class="pre_line"><%= artwork.description || "(説明)" %>dddddddddddd</dd>
+
+			<dt>サイズ</dt>
+			<dd id="spec_spec" class="pre_line"><%= artwork.spec || "(サイズ)" %></dd>
+
+			<dt>技法</dt>
+			<dd id="spec_techniques">
+				<%= (techniques && techniques.length) ? techniques.join(", ") : " (技法)" %>
+			</dd>
+
+			<dt>色合い</dt>
+			<dd id="spec_coloring">
+				<%= artwork.coloring || "(色合い)" %>
+			</dd>
+
+			<dt>粘土</dt>
+			<dd id="spec_clay" class="pre_line"><%= artwork.clay || "(粘土)" %></dd>
+
+			<dt>釉薬</dt>
+			<dd id="spec_glaze" class="pre_line"><%= artwork.glaze || "(釉掛け)" %></dd>
+
+			<dt>補足</dt>
+			<dd id="spec_notes" class="pre_line"><%= artwork.notes || "" %></dd>
+
+			<dt>完成日</dt>
+			<dd id="spec_completion_date">
+				<%= artwork.completion_date || "―" %>
+			</dd>
+
+			<dt>Instagram</dt>
+			<dd id="spec_instagram_url" class="instagram_icon">
+				<% if (!artwork.instagram_url) { %>
+					―
+				<% } else { %>
+					<a href="<%= artwork.instagram_url %>" target="_blank" rel="noopener noreferrer">
+						<img src="/images/Instagram_Glyph_Gradient.png" loading="lazy" alt="Instagramへ">
+					</a>
+				<% } %>
+			</dd>
+
+			<dt>ご購入</dt>
+			<dd id="spec_online_shop" class="minne_icon">
+				<% if (!artwork.in_stock || !artwork.shop_url) { %>
+					(sold out)
+				<% } else { %>
+					<a href="<%= artwork.shop_url %>" target="_blank" rel="noopener noreferrer">
+						<img src="/images/minne_logo_vertical.png" loading="lazy" alt="オンラインショップへ">
+					</a>
+				<% } %>
+			</dd>
+
+			<dt></dt>
+			<dd class="spec_update_date_style">
+				(記事<a href="/detail?id=<%= artwork.id %>" id="edit_link">更新</a>
+				<span class="non_edit">更新</span>
+				<span id="spec_update_date">
+					<%= artwork.update_date || "―" %>
+				</span>)
+			</dd>
+		</dl>
+	</main>
+
+	<footer>
+		<p>&copy; 2025 シシワカ陶苑</p>
+	</footer>
+
+	<!-- lightbox -->
+	<div id="lightbox">
+		<div id="lightboxInner">
+			<img id="lightboxImage" class="lightbox-media" src="/images/noimage.svg" alt="拡大画像">
+			<video id="lightboxVideo" class="lightbox-media" preload="metadata" playsinline controls></video>
+		</div>
+	</div>
+
+	<!-- scripts -->
+	<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+	<script src="/scripts/detail.js"></script>
+</body>
+
+</html>

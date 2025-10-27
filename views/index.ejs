@@ -1,8 +1,90 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
-<head><meta charset="utf-8"><title>Express + EJS</title></head>
+
+<head>
+	<meta charset="UTF-8">
+	<title>シシワカ陶苑</title>
+	<link rel="stylesheet" href="/css/reset.css">
+	<link rel="stylesheet" href="/css/style.css">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Hina+Mincho&family=Kaisei+Tokumin&family=M+PLUS+2:wght@100..900&family=Zen+Antique&display=swap"
+		rel="stylesheet">
+</head>
+
 <body>
-  <h1>こんにちは、<%= name %> さん！</h1>
-  <p>Express + EJS @ Cloud Shell で動いています。</p>
+	<header>
+		<a href="/" class="header_left_block">
+			<img class="sisiwaka_touen_icon" src="/images/sisiwaka_touen_logo.jpg" alt="シシワカ陶苑ロゴ">
+			<h1>シシワカ陶苑</h1>
+		</a>
+		<div class="header_right_block">
+			<div class="minne_icon">
+				<a href="https://minne.com/@sisiwaka10en" target="_blank">
+					<img src="/images/minne_logo_vertical.png" alt="minne logo">
+				</a>
+			</div>
+			<div class="instagram_icon">
+				<a href="https://www.instagram.com/albrecht1999/" target="_blank">
+					<img class="instagram_icon" src="/images/Instagram_Glyph_Gradient.png" alt="Instagram Icon">
+				</a>
+			</div>
+		</div>
+	</header>
+
+	<main>
+		<div class="main_container">
+			<!-- Newsセクション -->
+			<section class="news_section">
+				<h2 class="nav_font">更新情報</h2>
+				<div class="section_contents" id="updates">
+					<% for (const update_item of updates_list) { %>
+						<article class="update_item">
+							<time class="update_date">
+								<%= update_item.created_at_ymd %>
+							</time>
+							<p class="update_article is_collapsed" aria-expanded="false"><%= update_item.article %></p>
+						</article>
+						<% } %>
+				</div>
+			</section>
+			<!-- Newsセクション終わり -->
+
+			<!-- Aboutセクション -->
+			<div class="about_section">
+				<h2 class="nav_font">シシワカ陶苑について</h2>
+				<div class="intro_area section_contents">
+					<div class="sisiwaka_family_area">
+						<figure>
+							<img src="/images/sisiwaka_touen_family.png" alt="パパ・シシワカとアクセル・シシワカ">
+							<figcaption>パパ・シシワカとアクセル・シシワカ（17世紀ごろ）</figcaption>
+						</figure>
+					</div>
+					<div class="intro_text">
+						<p>　私が陶芸に惹かれたのは、高校の修学旅行で出会った清水焼のコーヒーカップがきっかけです。その後、自分でも作ってみたくなり、陶芸教室で学び始めました。</p>
+						<p>　もう一つの趣味はサボテン。子供の頃に出会って以来、育てるのが楽しみで、作品にもサボテンや多肉植物をモチーフに取り入れています。好きなものを組み合わせて形にするのが、私の創作スタイルです。
+						</p>
+						<p>　技法は「しのぎ」と「練り込み」を使い、独特の模様や質感を生み出しています。特に、色土を重ねて削る過程が好きで、新しい発見が毎回あります。</p>
+						<p>　作品はコーヒーカップが中心ですが、茶碗や湯飲み、植木鉢なども作っています。日常の中で楽しめる器を目指しています。</p>
+						<p>　また、息子も私の影響で陶芸を始め、いくつかの作品を作りました。今は学業が忙しく一時中断していますが、このサイトでは親子それぞれの作品を紹介しています。それぞれの器を楽しんでいただけたら幸いです。
+						</p>
+					</div>
+				</div>
+			</div>
+			<!-- Aboutセクション終わり -->
+
+			<!-- Worksセクション -->
+			<a href="/works" class="art_link"><span>作品一覧へ</span></a>
+		</div>
+	</main>
+
+	<footer>
+		<p>&copy; 2025 シシワカ陶苑</p>
+	</footer>
+
+	<script src="/scripts/top_page.js"></script>
 </body>
+
 </html>
