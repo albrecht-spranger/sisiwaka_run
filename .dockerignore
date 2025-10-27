@@ -1,0 +1,6 @@
+.git
+.gitignore
+node_modules
+vendor  # ※ マルチステージでComposerしているので通常は不要
+.DS_Store
+*.log
