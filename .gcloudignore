@@ -1,0 +1,18 @@
+# まず .gitignore と同等を読ませる
+.gcloudignore
+.git
+.gitignore
+
+# ローカル生成物
+node_modules
+npm-debug.log
+*.log
+
+# Docker 関連（Buildpacks方式では不要）
+Dockerfile
+docker/
+
+# ドキュメント・ツール類（本番ランタイム不要）
+readme.txt
+firestore_import/
+src/  # 中身が空/開発用なら除外

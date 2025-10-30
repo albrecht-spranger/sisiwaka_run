@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<title>シシワカ陶苑：【編集】<%= artwork.description_title %>
+	</title>
+	<link rel="stylesheet" href="/css/reset.css">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/detail.css">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Hina+Mincho&family=Kaisei+Tokumin&family=M+PLUS+2:wght@100..900&family=Zen+Antique&display=swap"
+		rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		<a href="/" class="header_left_block">
+			<img class="sisiwaka_touen_icon" src="/images/sisiwaka_touen_logo.jpg" alt="シシワカ陶苑ロゴ">
+			<h1>シシワカ陶苑</h1>
+		</a>
+		<div class="header_right_block">
+			<div class="minne_icon">
+				<a href="https://minne.com/@sisiwaka10en" target="_blank">
+					<img src="/images/minne_logo_vertical.png" alt="minne logo">
+				</a>
+			</div>
+			<div class="instagram_icon">
+				<a href="https://www.instagram.com/albrecht1999/" target="_blank">
+					<img src="/images/Instagram_Glyph_Gradient.png" alt="Instagram Icon">
+				</a>
+			</div>
+		</div>
+	</header>
+
+	<main>
+		<section>
+			<!-- タイトル -->
+			<div class="works_name_container">
+				<h1 id="works_name">編集</h1>
+			</div>
+
+			<!-- 保存先は後で作る /admin/edit_process へ -->
+			<form id="edit_form" action="/admin/edit_process" method="post">
+				<!-- 画像一覧 -->
+				<div id="media_gallery">
+					<% for (const media of media_list) { %>
+						<div class="media_gallery_card">
+							<img loading="lazy" src="<%= media.image_url %>" alt="" <% if (media.video_url) { %>
+							data-type="video" data-video_src="<%= media.video_url %>" <% } %> />
+									<label>
+										<input type="checkbox" name="media[<%= String(media.id) %>]" value="1"
+											<%=media.valid ? "checked" : "" %> />
+										有効
+									</label>
+						</div>
+						<% } %>
+				</div>
+
+				<!-- 作品説明 -->
+				<dl class="works_spec_container">
+					<dt>ID</dt>
+					<dd id="spec_id">
+						<%= String(artwork.id) || "(ID)" %>
+					</dd>
+					<input type="hidden" name="id" id="spec_hidden_id" value="<%= String(artwork.id) %>" />
+
+					<dt>作品タイトル</dt>
+					<dd>
+						<input type="text" name="description_title" id="spec_description_title"
+							value="<%= artwork.description_title %>" required>
+					</dd>
+
+					<dt>銘</dt>
+					<dd>
+						<input type="text" name="name" id="spec_name" value="<%= artwork.name %>">
+					</dd>
+
+					<dt>用途</dt>
+					<dd id="spec_category">
+						<% for (const cat of category_list) { %>
+							<label>
+								<input type="radio" name="category" value="<%= cat.slug %>"
+									<%=(cat.slug===artwork.category) ? "checked" : "" %> />
+								<%= cat.label_ja || cat.slug %>
+							</label>
+							<% } %>
+					</dd>
+
+					<dt>説明</dt>
+					<dd>
+						<textarea name="description" id="spec_description" rows="12"
+							class="pre_line"><%= artwork.description %></textarea>
+					</dd>
+
+					<dt>サイズ</dt>
+					<dd>
+						<textarea name="spec" id="spec_spec" rows="4" class="pre_line"><%= artwork.spec %></textarea>
+					</dd>
+
+					<dt>技法</dt>
+					<dd id="spec_techniques">
+						<% for (const tech of techniques_list) { const checked=used_techniques.includes(tech.slug)
+							? "checked" : "" ; %>
+							<label>
+								<input type="checkbox" name="techniques[]" value="<%= tech.slug %>" <%=checked %> />
+								<%= tech.label_ja || tech.slug %>
+							</label>
+							<% } %>
+					</dd>
+
+					<dt>色合い</dt>
+					<dd id="spec_coloring">
+						<% for (const col of coloring_list) { %>
+							<label>
+								<input type="radio" name="coloring" value="<%= col.slug %>"
+									<%=(col.slug===artwork.coloring) ? "checked" : "" %> />
+								<%= col.label_ja || col.slug %>
+							</label>
+							<% } %>
+					</dd>
+
+					<dt>粘土</dt>
+					<dd>
+						<textarea name="clay" id="spec_clay" class="pre_line"><%= artwork.clay %></textarea>
+					</dd>
+
+					<dt>釉薬</dt>
+					<dd>
+						<textarea name="glaze" id="spec_glaze" class="pre_line"><%= artwork.glaze %></textarea>
+					</dd>
+
+					<dt>補足</dt>
+					<dd>
+						<textarea name="notes" id="spec_notes" class="pre_line"><%= artwork.notes %></textarea>
+					</dd>
+
+					<dt>完成日</dt>
+					<dd>
+						<input type="date" id="spec_completion_date" name="completion_date"
+							value="<%= artwork.completion_date_value %>">
+					</dd>
+
+					<dt>Instagram</dt>
+					<dd>
+						<input type="url" name="instagram_url" id="spec_instagram_url"
+							value="<%= artwork.instagram_url %>">
+					</dd>
+
+					<dt>在庫</dt>
+					<dd>
+						<label>
+							<input type="checkbox" name="in_stock" id="spec_in_stock" value="1" <%=artwork.in_stock
+								? "checked" : "" %> />
+							あり
+						</label>
+					</dd>
+
+					<dt>ショップURL</dt>
+					<dd>
+						<input type="url" name="shop_url" id="spec_shop_url" value="<%= artwork.shop_url %>" />
+					</dd>
+
+					<dt>valid</dt>
+					<dd>
+						<label>
+							<input type="hidden" name="valid" value="0">
+							<input type="checkbox" name="valid" id="spec_valid" value="1" <%=artwork.valid ? "checked"
+								: "" %> />
+							本作品を有効とする
+						</label>
+					</dd>
+
+					<dt></dt>
+					<dd class="spec_update_date_style">
+						(記事更新　<%= artwork.update_date_display %>)
+					</dd>
+				</dl>
+
+				<!-- ボタン -->
+				<div class="forms_buttons">
+					<button type="button" id="cancel_btn" onclick="history.back()"><span>キャンセル</span></button>
+					<button type="submit" id="submit_btn"><span>登録する</span></button>
+				</div>
+			</form>
+		</section>
+	</main>
+
+	<footer>
+		<p>&copy; 2025 シシワカ陶苑</p>
+	</footer>
+
+	<!-- lightbox（必要なら detail.css / detail.js を流用） -->
+	<div id="lightbox">
+		<div id="lightboxInner">
+			<img id="lightboxImage" class="lightbox-media" src="/images/noimage.svg" alt="拡大画像">
+			<video id="lightboxVideo" class="lightbox-media" preload="metadata" playsinline controls></video>
+		</div>
+	</div>
+
+	<!-- 任意の編集用スクリプト -->
+	<script src="/admin/static/edit.js" defer></script>
+</body>
+
+</html>
