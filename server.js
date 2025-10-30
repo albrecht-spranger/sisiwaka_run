@@ -444,7 +444,7 @@ app.post("/admin/edit_process", requireBasicAuth, async (req, res) => {
 	const clay = req.body.clay ?? "";
 	const glaze = req.body.glaze ?? "";
 	const notes = req.body.notes ?? "";
-	const in_stock = (req.body.in_stock === "1" || (Array.isArray(req.body.in_stock) && req.body.in_stock.includes("1")));
+	const in_stock = req.body.in_stock === "1";
 	const shop_url = req.body.shop_url ?? "";
 	const instagram_url = req.body.instagram_url ?? "";
 	const completion_date_str = (req.body.completion_date === "") ? null : (req.body.completion_date ?? null);
