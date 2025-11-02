@@ -4,7 +4,6 @@ import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 import { Firestore } from "@google-cloud/firestore";
-
 import dotenv from "dotenv";
 dotenv.config(); // .env を読み込む
 
@@ -33,16 +32,6 @@ app.use(express.static(path.join(__dirname, "public")));
 // Firestore クライアント（ADC 利用: Cloud Shell/Runなら認証済）
 const db = new Firestore();
 
-// util: 日付フォーマット（YYYY/M/D）
-function formatYmd(tsOrDate) {
-	if (!tsOrDate) return "";
-	const d = tsOrDate.toDate ? tsOrDate.toDate() : new Date(tsOrDate);
-	const y = d.getFullYear();
-	const m = d.getMonth() + 1;
-	const day = d.getDate();
-	return `${y}/${m}/${day}`;
-}
-
 // ルート（index）
 app.get("/", async (req, res) => {
 	try {
@@ -53,6 +42,7 @@ app.get("/", async (req, res) => {
 			.get();
 
 		const updates_list = snap.docs.map(doc => {
+		// ⇒map関数はコールバック関数に従い、配列を別の配列に変換する
 			const d = doc.data();
 			const dt = d.created_at?.toDate?.();
 			const ymd = dt ? `${dt.getFullYear()}/${dt.getMonth() + 1}/${dt.getDate()}` : "";

@@ -56,10 +56,13 @@
 				<div class="swiper-wrapper" id="swiper_slide_holder">
 					<% for (const m of media_rows) { %>
 						<div class="swiper-slide">
-							<img loading="lazy" src="<%= m.image_url %>" alt="<%= m.alt_ja || artwork.name %>" <% if
-								(m.video_url) { %> data-type="video" data-video_src="<%= m.video_url %>" <% } %> />
+							<img loading="lazy" src="<%= m.image_url %>" alt="<%= m.alt_ja || artwork.name %>" 
+								<% if (m.video_url) { %>
+									data-type="video" data-video_src="<%= m.video_url %>"
+								<% } %>
+							/>
 						</div>
-						<% } %>
+					<% } %>
 				</div>
 			</div>
 			<div class="swiper-pagination"></div>
