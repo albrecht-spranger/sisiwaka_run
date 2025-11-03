@@ -1,18 +1,18 @@
 // server.js（抜粋 or 追記）
-// 事前に: npm i @google-cloud/firestore
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 import { Firestore } from "@google-cloud/firestore";
 import dotenv from "dotenv";
-dotenv.config(); // .env を読み込む
+const result = dotenv.config();	// .env を読み込む
+if (result.error) {
+	console.log(".env ファイルが見つかりません。環境変数から読み込みます。");
+}
 
 const ADMIN_USER = process.env.ADMIN_USER;
 const ADMIN_PASS = process.env.ADMIN_PASS;
-const ADMIN_REALM = process.env.ADMIN_REALM || "Restricted Area";
-const BASIC_OFF =
-	(process.env.BASIC_AUTH || "").toLowerCase() === "off" ||
-	process.env.NODE_ENV === "development";
+const ADMIN_REALM = "シシワカ陶苑 管理者ページ";
+const BASIC_OFF = process.env.BASIC_AUTH;
 
 const app = express();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -42,7 +42,7 @@ app.get("/", async (req, res) => {
 			.get();
 
 		const updates_list = snap.docs.map(doc => {
-		// ⇒map関数はコールバック関数に従い、配列を別の配列に変換する
+			// ⇒map関数はコールバック関数に従い、配列を別の配列に変換する
 			const d = doc.data();
 			const dt = d.created_at?.toDate?.();
 			const ymd = dt ? `${dt.getFullYear()}/${dt.getMonth() + 1}/${dt.getDate()}` : "";
@@ -130,7 +130,7 @@ app.get("/works", async (req, res) => {
 		const techniques = techSnap.docs.map(d => ({ slug: d.id, ...(d.data() || {}) }));
 		const colorings = colSnap.docs.map(d => ({ slug: d.id, ...(d.data() || {}) }));
 
-		res.render("works", { all_products, categories, techniques, colorings });
+		res.render("works", { all_products, categories, techniques, colorings, query: req.query });
 	} catch (e) {
 		console.error("[/works Error]", e);
 		res.status(500).send("エラーが発生しました。");
@@ -245,6 +245,7 @@ app.get("/detail", async (req, res) => {
 			artwork,
 			media_rows,
 			techniques, // ["しのぎ", "練り込み", ...]
+			query: req.query
 		});
 	} catch (e) {
 		console.error("[/detail Error]", e);
@@ -262,7 +263,7 @@ function requireBasicAuth(req, res, next) {
 	const h = req.headers.authorization || "";
 	// "Basic base64(user:pass)" を想定
 	if (!h.startsWith("Basic ")) {
-		res.set("WWW-Authenticate", `Basic realm="${ADMIN_REALM}"`);
+		res.set("WWW-Authenticate", `Basic realm="Basic Authorization"`);
 		return res.status(401).send("Authentication required.");
 	}
 	const base64 = h.slice(6).trim();
@@ -277,7 +278,7 @@ function requireBasicAuth(req, res, next) {
 	}
 	if (user === ADMIN_USER && pass === ADMIN_PASS) return next();
 
-	res.set("WWW-Authenticate", `Basic realm="${ADMIN_REALM}"`);
+	res.set("WWW-Authenticate", `Basic realm="Basic Authorization"`);
 	return res.status(401).send("Authentication required.");
 }
 

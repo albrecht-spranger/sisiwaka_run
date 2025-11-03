@@ -3,16 +3,37 @@
 .git
 .gitignore
 
+# ==============================
+# 機密・環境変数ファイル（必須）
+# ==============================
+.env
+.env.*
+*.key
+*.pem
+
 # ローカル生成物
 node_modules
 npm-debug.log
 *.log
+dist/
+tmp/
+.cache/
+coverage/
 
 # Docker 関連（Buildpacks方式では不要）
 Dockerfile
 docker/
+.dockerignore
 
+# ==============================
 # ドキュメント・ツール類（本番ランタイム不要）
+# ==============================
+README*
 readme.txt
+*.md
+docs/
 firestore_import/
-src/  # 中身が空/開発用なら除外
+tests/
+src/   # 中身が開発専用の場合のみ除外
+firestore_import/
+correct_video_url/

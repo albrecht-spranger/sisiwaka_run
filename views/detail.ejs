@@ -43,6 +43,14 @@
 		<!-- 一覧に戻る -->
 		<p class="back_to_works"><a href="/works" class="link_style">一覧に戻る</a></p>
 
+		<!-- フラッシュメッセージ -->
+		<% if (query && query.flash) { %>
+			<p class="flash_message flash--success"><%= query.flash %></p>
+		<% } %>
+		<% if (query && query.flash_error) { %>
+			<p class="flash_message flash--error"><%= query.flash_error %></p>
+		<% } %>
+
 		<!-- タイトル -->
 		<div class="works_name_container">
 			<h1 id="works_name">

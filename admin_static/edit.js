@@ -4,12 +4,16 @@ document.addEventListener('DOMContentLoaded', () => {
 	//
 	make_lightbox();
 
+	// idパラメータを取得
+	const params = new URLSearchParams(window.location.search);
+	const id = params.get('id');
+
 	// キャンセルボタン
 	const el_cancel_btn = document.getElementById('cancel_btn');
 	el_cancel_btn.addEventListener('click', () => {
 		const ok = window.confirm('書き込まずに元の画面に戻ります。よろしいですか？');
 		if (!ok) return;
-		history.back();
+		location.href = `/detail?id=${id}`;
 	});
 });
 
