@@ -81,24 +81,11 @@ app.get("/works", async (req, res) => {
 
 		// 本命: valid==true を a.id DESC 相当で並べる → artwork_id DESC
 		// ※ 初回は複合インデックス（valid asc + artwork_id desc）が必要
-		try {
-			const snap = await db.collection("sisiwaka_touen_artworks")
-				.where("valid", "==", true)
-				.orderBy("artwork_id", "desc")
-				.get();
-			docs = snap.docs.map(d => d.data());
-		} catch (err) {
-			if (err && err.code === 9) {
-				console.warn("[INFO] artworks: composite index not ready. Falling back.");
-				const snap = await db.collection("sisiwaka_touen_artworks")
-					.orderBy("artwork_id", "desc")
-					.limit(500) // 必要に応じて増減
-					.get();
-				docs = snap.docs.map(d => d.data()).filter(a => a.valid === true);
-			} else {
-				throw err;
-			}
-		}
+		const snap = await db.collection("sisiwaka_touen_artworks")
+			.where("valid", "==", true)
+			.orderBy("artwork_id", "desc")
+			.get();
+		docs = snap.docs.map(d => d.data());
 
 		// products（Isotopeに必要な最小情報へ整形）
 		const all_products = docs.map(a => {
@@ -119,16 +106,22 @@ app.get("/works", async (req, res) => {
 		});
 
 		// マスタ（チェックボックス用）
-		// PHP版は「実在カテゴリだけ」でしたが、まずは valid=true 全件を出します
-		const [catsSnap, techSnap, colSnap] = await Promise.all([
-			db.collection("sisiwaka_touen_categories").where("valid", "==", true).get(),
-			db.collection("sisiwaka_touen_techniques").where("valid", "==", true).orderBy("sort_order", "asc").get(),
-			db.collection("sisiwaka_touen_colorings").where("valid", "==", true).get(),
-		]);
+		// ⇒awaitがないと、db.collectionが値を返す前に次のコードに進んでしまう。
+		const cats_snap = await db.collection("sisiwaka_touen_categories")
+			.where("valid", "==", true)
+			.get();
+		const categories = cats_snap.docs.map(d => ({ slug: d.id, ...(d.data() || {}) }));
 
-		const categories = catsSnap.docs.map(d => ({ slug: d.id, ...(d.data() || {}) }));
-		const techniques = techSnap.docs.map(d => ({ slug: d.id, ...(d.data() || {}) }));
-		const colorings = colSnap.docs.map(d => ({ slug: d.id, ...(d.data() || {}) }));
+		const tech_snap = await db.collection("sisiwaka_touen_techniques")
+			.where("valid", "==", true)
+			.orderBy("sort_order", "asc")
+			.get();
+		const techniques = tech_snap.docs.map(d => ({ slug: d.id, ...(d.data() || {}) }));
+
+		const col_snap = await db.collection("sisiwaka_touen_colorings")
+			.where("valid", "==", true)
+			.get();
+		const colorings = col_snap.docs.map(d => ({ slug: d.id, ...(d.data() || {}) }));
 
 		res.render("works", { all_products, categories, techniques, colorings, query: req.query });
 	} catch (e) {
