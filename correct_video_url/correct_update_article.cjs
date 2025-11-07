@@ -2,10 +2,10 @@ const { Firestore, Timestamp } = require('@google-cloud/firestore');
 const COLLECTION = 'sisiwaka_touen_updates';
 
 async function addUpdate() {
-  const db = new Firestore();
-  const docRef = db.collection(COLLECTION).doc(); // 自動ID
+	const db = new Firestore();
+	const docRef = db.collection(COLLECTION).doc(); // 自動ID
 
-  const articleText = `以下の作品を追加しました。
+	const articleText = `以下の作品を追加しました。
   ・玉サボテン様コーヒーカップ「黒亀」
   ・柱サボテン様コーヒーカップ「十二刻」
   ・玉サボテン様12足黒マットパスタ皿「玄武皿」
@@ -21,23 +21,23 @@ async function addUpdate() {
   ・サボテン金剛丸様練り込み中鉢「雪墨嶺」
   ・ねじり金剛丸様練り込みデミタスカップ「牡蠣の群生」`;
 
-  // created_at を Firestore Timestamp に変換
-  const createdAt = new Date("2025/10/20 11:03:33.000");
-  const timestamp = Timestamp.fromDate(createdAt);
+	// created_at を Firestore Timestamp に変換
+	const createdAt = new Date("2025/10/20 11:03:33.000");
+	const timestamp = Timestamp.fromDate(createdAt);
 
-  const valid = true;
+	const valid = true;
 
-  try {
-    await docRef.set({
-      article: articleText,
-      created_at: timestamp,
-      valid: valid,
-    });
+	try {
+		await docRef.set({
+			article: articleText,
+			created_at: timestamp,
+			valid: valid,
+		});
 
-    console.log("✅ Document successfully written!");
-  } catch (error) {
-    console.error("❌ Error writing document:", error);
-  }
+		console.log("✅ Document successfully written!");
+	} catch (error) {
+		console.error("❌ Error writing document:", error);
+	}
 }
 
 addUpdate();
