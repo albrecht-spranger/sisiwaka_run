@@ -168,22 +168,54 @@ footer {
 	font-size: 1rem;
 	line-height: 1.6;
 	color: gainsboro;
-	white-space: nowrap;
+	/* white-space: nowrap; */
+	white-space: pre-wrap;
 	overflow: hidden;
 	position: relative;
+	/* cursor: pointer; */
+}
+
+/* 複数行あって「折りたたみ対象」になったものだけに付くクラス */
+.update_article.has_more {
 	cursor: pointer;
+	/* クリックできる感じに */
 }
 
-/* 畳み込み時 */
-.update_article.is_collapsed {
-	white-space: nowrap;
-	/* 折り返さない */
+/* 折りたたみ中（1行だけ表示する） */
+.update_article.has_more.is_collapsed {
+	max-height: 1.6rem;
+	/* 行の高さに合わせて調整（1行ぶん） */
 }
 
-/* 展開時は改行と折り返しを有効化して全文表示 */
-.update_article.is_expanded {
-	white-space: pre-wrap;
-	/* 改行と連続空白を保持しつつ折り返し */
+/* 矢印の共通スタイル（複数行のときのみ） */
+.update_article.has_more::after {
+	position: absolute;
+	right: 0;
+	bottom: auto;
+	pointer-events: none;
+	/* 矢印自体ではなく文章領域でクリック */
+}
+
+/* 折りたたみ時：⇓ */
+.update_article.has_more.is_collapsed::after {
+	content: "more";
+	background-color: #444444;
+	color: gainsboro;
+	font-weight: 800;
+	bottom: 0;
+	top: auto;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+	border-radius: 0.8rem;
+	line-height: 1.4;
+	display: block;
+	height: 1.6rem;
+}
+
+/* 展開時：右下に ⇑ */
+.update_article.has_more[aria-expanded="true"]::after {
+	content: "";
+	display: none;
 }
 
 /* ======================================

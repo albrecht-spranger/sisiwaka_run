@@ -77,18 +77,28 @@ function pickThumbnail(mediaArr = []) {
 
 app.get("/works", async (req, res) => {
 	try {
-		let docs;
-
-		// 本命: valid==true を a.id DESC 相当で並べる → artwork_id DESC
-		// ※ 初回は複合インデックス（valid asc + artwork_id desc）が必要
-		const snap = await db.collection("sisiwaka_touen_artworks")
-			.where("valid", "==", true)
-			.orderBy("artwork_id", "desc")
-			.get();
-		docs = snap.docs.map(d => d.data());
+		const [artworks_snap, cats_snap, tech_snap, col_snap] = await Promise.all([
+			// artworks: valid==true を a.id DESC 相当で並べる → artwork_id DESC
+			db.collection("sisiwaka_touen_artworks")
+				.where("valid", "==", true)
+				.orderBy("artwork_id", "desc")
+				.get(),
+			// マスタ（チェックボックス用）
+			db.collection("sisiwaka_touen_categories")
+				.where("valid", "==", true)
+				.get(),
+			db.collection("sisiwaka_touen_techniques")
+				.where("valid", "==", true)
+				.orderBy("sort_order", "asc")
+				.get(),
+			db.collection("sisiwaka_touen_colorings")
+				.where("valid", "==", true)
+				.get()
+		]);
 
 		// products（Isotopeに必要な最小情報へ整形）
-		const all_products = docs.map(a => {
+		const all_products = artworks_snap.docs.map(d => {
+			const a = d.data();
 			const techniques = Array.isArray(a.techniques)
 				? a.techniques
 					.filter(t => t && (t.valid === true || t.valid === undefined))
@@ -105,25 +115,12 @@ app.get("/works", async (req, res) => {
 			};
 		});
 
-		// マスタ（チェックボックス用）
-		// ⇒awaitがないと、db.collectionが値を返す前に次のコードに進んでしまう。
-		const cats_snap = await db.collection("sisiwaka_touen_categories")
-			.where("valid", "==", true)
-			.get();
 		const categories = cats_snap.docs.map(d => ({ slug: d.id, ...(d.data() || {}) }));
-
-		const tech_snap = await db.collection("sisiwaka_touen_techniques")
-			.where("valid", "==", true)
-			.orderBy("sort_order", "asc")
-			.get();
 		const techniques = tech_snap.docs.map(d => ({ slug: d.id, ...(d.data() || {}) }));
-
-		const col_snap = await db.collection("sisiwaka_touen_colorings")
-			.where("valid", "==", true)
-			.get();
 		const colorings = col_snap.docs.map(d => ({ slug: d.id, ...(d.data() || {}) }));
 
 		res.render("works", { all_products, categories, techniques, colorings, query: req.query });
+
 	} catch (e) {
 		console.error("[/works Error]", e);
 		res.status(500).send("エラーが発生しました。");
